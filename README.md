@@ -1,4 +1,7 @@
-<h1 align="center">TradeMate — Risk-First MT5 Trading System</h1>
+<picture>
+  <source media="(prefers-color-scheme: light)" srcset="assets/theme/hero-light.svg"/>
+  <img width="100%" src="assets/theme/hero-dark.svg" alt="TradeMate. Risk-first MT5 trading system."/>
+</picture>
 
 <p align="center">
   A rule-based MetaTrader 5 Expert Advisor with a Python monitoring app, built around survivable risk rather than big promises.<br/>
@@ -6,7 +9,7 @@
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Status-Demo_testing-f59e0b?style=flat-square" alt="Demo testing"/>
+  <img src="https://img.shields.io/badge/Status-Demo_testing-f97316?style=flat-square&labelColor=16162a" alt="Demo testing"/>
   <img src="https://img.shields.io/badge/MQL5-1E90FF?style=flat-square&logo=metatrader&logoColor=white" alt="MQL5"/>
   <img src="https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=python&logoColor=white" alt="Python"/>
   <img src="https://img.shields.io/badge/pandas-150458?style=flat-square&logo=pandas&logoColor=white" alt="pandas"/>
@@ -17,7 +20,7 @@
 >
 > **Not financial advice.** Backtests are not live results, and nothing here promises profit. Only trade money you can afford to lose.
 
----
+<p align="center"><img width="100%" src="assets/theme/divider.svg" alt=""/></p>
 
 ## Screenshots
 
@@ -31,7 +34,7 @@
   <br/><sub>Entry state machine and trend overlay</sub>
 </p>
 
----
+<p align="center"><img width="100%" src="assets/theme/divider.svg" alt=""/></p>
 
 ## Design principles
 
@@ -57,6 +60,7 @@ Every entry must pass **six independent filter layers** before a setup is even c
 Then a **state machine** controls timing, so the EA never fires on every tick:
 
 ```mermaid
+%%{init: {'theme':'base','themeVariables':{'primaryColor':'#16162a','primaryTextColor':'#f0f0ff','primaryBorderColor':'#4f46e5','lineColor':'#0ea5e9','secondaryColor':'#0d0d1a','tertiaryColor':'#12121f','clusterBkg':'#0d0d1a','clusterBorder':'#4f46e5','titleColor':'#0ea5e9','edgeLabelBackground':'#16162a'}}}%%
 flowchart LR
   S["SCANNING<br/>6 layers"] --> A["ARMED<br/>setup stored"]
   A --> W["WINDOW<br/>confirm on a later bar"]
@@ -94,7 +98,7 @@ flowchart LR
 - Exact Strategy Tester settings recorded for every re-test
 - Separate presets for EURUSD and XAUUSD (gold pip size is handled explicitly, not assumed)
 
----
+<p align="center"><img width="100%" src="assets/theme/divider.svg" alt=""/></p>
 
 ## Contact
 
