@@ -60,13 +60,42 @@ Every entry must pass **six independent filter layers** before a setup is even c
 Then a **state machine** controls timing, so the EA never fires on every tick:
 
 ```mermaid
-%%{init: {'theme':'base','themeVariables':{'primaryColor':'#16162a','primaryTextColor':'#f0f0ff','primaryBorderColor':'#4f46e5','lineColor':'#0ea5e9','secondaryColor':'#0d0d1a','tertiaryColor':'#12121f','clusterBkg':'#0d0d1a','clusterBorder':'#4f46e5','titleColor':'#0ea5e9','edgeLabelBackground':'#16162a'}}}%%
+%%{init: {'theme':'base','themeVariables':{'fontSize':'15px','primaryColor':'#16162a','primaryTextColor':'#f0f0ff','primaryBorderColor':'#4f46e5','lineColor':'#0ea5e9','clusterBkg':'#0d0d1a','clusterBorder':'#4f46e5','titleColor':'#0ea5e9','edgeLabelBackground':'#16162a'}}}%%
 flowchart LR
-  S["SCANNING<br/>6 layers"] --> A["ARMED<br/>setup stored"]
-  A --> W["WINDOW<br/>confirm on a later bar"]
-  W --> E["ENTRY<br/>tick-value lot sizing"]
-  E --> T["IN TRADE<br/>one position, locked"]
+  S(["🔎 SCANNING<br/>6 layers"]):::trainee --> A(["🎯 ARMED<br/>setup stored"]):::staff
+  A --> W(["⏳ WINDOW<br/>confirm on a later bar"]):::ai
+  W --> E(["⚡ ENTRY<br/>tick-value lot sizing"]):::core
+  E --> T(["🔒 IN TRADE<br/>one position, locked"]):::field
   T --> S
+  classDef ai fill:#9333ea,stroke:#d8b4fe,stroke-width:2px,color:#ffffff
+  classDef core fill:#ea580c,stroke:#fdba74,stroke-width:3px,color:#ffffff
+  classDef field fill:#059669,stroke:#6ee7b7,stroke-width:2px,color:#ffffff
+  classDef staff fill:#4f46e5,stroke:#a5b4fc,stroke-width:2px,color:#ffffff
+  classDef trainee fill:#0284c7,stroke:#7dd3fc,stroke-width:2px,color:#ffffff
+  linkStyle default stroke:#0ea5e9,stroke-width:2px
+```
+
+### Every entry passes this gate
+
+```mermaid
+%%{init: {'theme':'base','themeVariables':{'fontSize':'15px','primaryColor':'#16162a','primaryTextColor':'#f0f0ff','primaryBorderColor':'#4f46e5','lineColor':'#0ea5e9','clusterBkg':'#0d0d1a','clusterBorder':'#4f46e5','titleColor':'#0ea5e9','edgeLabelBackground':'#16162a'}}}%%
+flowchart LR
+  NB(["🕯️ New bar<br/>closes"]):::trainee --> L{"6 layers<br/>pass?"}:::staff
+  L -->|yes| TAP["🎯 Tap arms<br/>the window"]:::ai
+  TAP --> BR{"Later-bar<br/>breakout?"}:::staff
+  BR -->|yes| RB{"Risk budget<br/>left?"}:::core
+  RB -->|yes| LOT["📐 Lot from stop<br/>and risk %"]:::field
+  LOT --> ORD(["✅ Order<br/>own magic"]):::field
+  L -->|no| SKIP(["⏭️ Skip bar"]):::bad
+  BR -->|no| SKIP
+  RB -->|no| HALT(["🛑 Stand aside<br/>daily loss · trades<br/>spread · news"]):::bad
+  classDef ai fill:#9333ea,stroke:#d8b4fe,stroke-width:2px,color:#ffffff
+  classDef bad fill:#7f1d1d,stroke:#fca5a5,stroke-width:2px,color:#ffffff
+  classDef core fill:#ea580c,stroke:#fdba74,stroke-width:3px,color:#ffffff
+  classDef field fill:#059669,stroke:#6ee7b7,stroke-width:2px,color:#ffffff
+  classDef staff fill:#4f46e5,stroke:#a5b4fc,stroke-width:2px,color:#ffffff
+  classDef trainee fill:#0284c7,stroke:#7dd3fc,stroke-width:2px,color:#ffffff
+  linkStyle default stroke:#0ea5e9,stroke-width:2px
 ```
 
 ## Risk controls built into the EA
